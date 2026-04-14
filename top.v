@@ -7,4 +7,27 @@ module top(
 
     // Hook up binary and one-hot state machines
 
+    wire z_onehot;
+    wire z_binary;
+    wire [4:0] onehot_state;
+    wire [2:0] binary_state;
+
+    onehot oh(
+        .w(sw),
+        .clk(btnC),
+        .reset(btnU),
+        .z(z_onehot),
+        .State(onehot_state)
+    );
+
+    binary bn(
+        .w(sw),
+        .clk(btnC),
+        .reset(btnU),
+        .z(z_binary),
+        .State(binary_state)
+    );
+
+    assign led = {binary_state, onehot_state, z_binary, z_onehot};
+
 endmodule
